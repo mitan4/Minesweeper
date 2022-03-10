@@ -37,19 +37,19 @@ public void draw ()
 }
 public boolean isWon()
 {
-   
-    return false;
+   for(int r = 0; r < buttons.length; r++)
+     for(int c = 0; c < buttons[r].length; c++)
+       if(buttons[r][c].clicked == false && !mines.contains(buttons[r][c]))
+         return false;
+   return true;
 }
 public void displayLosingMessage()
 {
-    fill(0);
-    buttons.setLabel(
-    if(mines.contains(this))
-      fill(255);
+    buttons[2][2].setLabel("You Lost!");
 }
 public void displayWinningMessage()
 {
-    //your code here
+    buttons[2][2].setLabel("You Won!");
 }
 public boolean isValid(int r, int c)
 {
@@ -102,8 +102,10 @@ public class MSButton
           displayLosingMessage();
         else if(countMines(myRow, myCol) > 0)
           setLabel(countMines(myRow, myCol));
-        else
-          mousePressed();
+        else if(isValid(myRow, myCol-1) == true && buttons[myRow][myCol-1].clicked == false)
+            buttons[myRow][myCol-1].mousePressed();
+        else if(isValid(myRow, myCol+1) == true && buttons[myRow][myCol+1].clicked == false)
+            buttons[myRow][myCol+1].mousePressed();
     }
     public void draw () 
     {    
